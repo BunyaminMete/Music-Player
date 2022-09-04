@@ -1,8 +1,8 @@
 All features are working correctly except for seek bar. (It is because of css scale function)
 
-Features:
-You can skip and skipback the music.
-Currently there are 3 musics updated.
+Features: <br/>
+You can skip and skipback the music. <br/>
+Currently there are 3 musics updated. <br/>
 Auto skip music if music ended.
 
 
