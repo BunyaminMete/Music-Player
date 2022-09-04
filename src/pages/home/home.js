@@ -85,9 +85,10 @@ const HomePage = () => {
       } else {
         setCleanName(songNames[songIndex + 1]);
       }
-    } else {
-      alert("sarkı bitti");
     }
+    //else {
+    //   empty
+    // }
 
     musicEvent.current.play();
     count % 2 === 0 && setCount(count + 1);
