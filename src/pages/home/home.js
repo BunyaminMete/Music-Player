@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
 import "./home.css";
 import CurrentSongInformations from "../../components/information/informations";
@@ -117,6 +117,10 @@ const HomePage = () => {
       <Helmet>
         <style>{"body { background-color: rgb(20, 84, 183); } "}</style>
       </Helmet>
+
+      <div className="newslider1">
+        <span className="newslider2"></span>
+      </div>
 
       <div ref={bgRef} className="playArea">
         <audio ref={musicEvent}>
