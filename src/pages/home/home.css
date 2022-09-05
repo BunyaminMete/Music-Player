@@ -3,7 +3,7 @@
     width: 600px;
     max-width: 100%;
     background-image: url("https://neredecekiliyor.com/wp-content/uploads/2020/04/Karayip-Korsanlar%C4%B1-Nerede-%C3%87ekildi.jpg");
-    background-size: 800px 530px;
+    background-size: 800px 550px;
     background-position: -100px 0px;
     background-repeat: no-repeat;
     opacity: 0.95;
@@ -16,9 +16,22 @@
     scale: 0.80;
 }
 
+
+
 .playArea:hover {
     transform: scale(1.1);
     transition: 1s;
+}
+
+.playArea:hover .favoriteButton{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 0px;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 550px;
+    top: 10px;
+
 }
 
 .sliderArea {

@@ -1,7 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+
 import "./home.css";
+
 import CurrentSongInformations from "../../components/information/informations";
+import FavoriteButton from "../../components/favbutton/favorite";
+import { Favorite } from "../../context/store";
 import {
   PauseIcon,
   SkipIcon,
@@ -27,6 +31,7 @@ const HomePage = () => {
   const [songIndex, setSongIndex] = React.useState(Number);
   const [whatsTime, setWhatsTime] = React.useState("");
   const [cleanName, setCleanName] = React.useState(songNames[0]);
+  const [showIcon, setShowIcon] = React.useState(false);
 
   const timeCounter = React.useRef();
   const musicEvent = React.useRef();
@@ -51,6 +56,8 @@ const HomePage = () => {
 
   const skipBackEvent = () => {
     if (songIndex > 0) {
+      Favorite.isFavorite = 0;
+
       setSongIndex(songIndex - 1);
       musicEvent.current.src = songs[songIndex - 1];
       bgRef.current.style.backgroundImage = `url(${images[songIndex - 1]})`;
@@ -74,6 +81,7 @@ const HomePage = () => {
     console.log(songIndex, "<", songs.length - 1);
 
     if (songIndex < songs.length - 1) {
+      Favorite.isFavorite = 0;
       setSongIndex(songIndex + 1);
       musicEvent.current.src = songs[songIndex + 1];
       bgRef.current.style.backgroundImage = `url(${images[songIndex + 1]})`;
@@ -129,8 +137,22 @@ const HomePage = () => {
           <source src={songs[songIndex]} type="audio/mpeg"></source>
         </audio>
 
-        <div className="fullControl">
+        <div
+          className="fullControl"
+          onMouseEnter={() => {
+            setShowIcon(true);
+          }}
+          onMouseLeave={() => {
+            if (Favorite.isFavorite % 2 !== 0) {
+              setShowIcon(true);
+            } else {
+              setShowIcon(false);
+            }
+          }}
+        >
           <br />
+          {showIcon === true && <FavoriteButton />}
+
           <CurrentSongInformations
             className="songInfo"
             singer={singers[songIndex]}
