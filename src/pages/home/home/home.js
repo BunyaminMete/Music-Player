@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
-
 import "./home.css";
 
-import CurrentSongInformations from "../../components/information/informations";
-import FavoriteButton from "../../components/favbutton/favorite";
-import { Favorite } from "../../context/store";
+import CurrentSongInformations from "../../../components/information/informations";
+import FavoriteButton from "../../../components/favbutton/favorite";
+import { Favorite } from "../../../context/store";
 import {
   PauseIcon,
   SkipIcon,
@@ -14,11 +13,15 @@ import {
   HoistMP3,
   SandmanMP3,
   MetallicaMP3,
-} from "../../import/assets.js";
+} from "../../../import/assets.js";
 
 const songs = [HoistMP3, SandmanMP3, MetallicaMP3];
 const singers = ["Colm Macguinnes", "Metallica", "Metallica"];
-const songNames = ["HOIST THE COLORS", "ENTER SANDMAN", "RIDE THE LIGHTNING"];
+const songNames = [
+  "HOIST THE COLORS",
+  "ENTER SANDMAN",
+  "RIDE THE LIGHTNING COMES INTO",
+];
 
 const images = [
   "https://neredecekiliyor.com/wp-content/uploads/2020/04/Karayip-Korsanlar%C4%B1-Nerede-%C3%87ekildi.jpg",
@@ -32,9 +35,6 @@ const HomePage = () => {
   const [whatsTime, setWhatsTime] = React.useState("");
   const [cleanName, setCleanName] = React.useState(songNames[0]);
   const [showIcon, setShowIcon] = React.useState(false);
-
-  const [startPoint, setStart] = React.useState("");
-  const [endPoint, setEndPoint] = React.useState("");
 
   const timeCounter = React.useRef();
   const musicEvent = React.useRef();
@@ -101,32 +101,18 @@ const HomePage = () => {
     count % 2 === 0 && setCount(count + 1);
   }
 
-  const seekBarPlay = (event) => {
-    console.log(event.type);
-    musicEvent.current.pause();
-    let progress = event.target.value;
+  const seekBarPlay = () => {
+    let progress = seekbarProgress.current.value;
     musicEvent.current.currentTime = progress / 1000;
-    setStart(+new Date().getTime());
-  };
-
-  const seekBarController = (event) => {
-    setEndPoint(+new Date().getTime());
-    console.log(startPoint - endPoint, "diff");
-    console.log(event.type);
-    let progress = event.target.value;
-
-    musicEvent.current.currentTime = progress / 1000;
-    // setTimeout(() => {}, diff);
-    musicEvent.current.play();
   };
 
   useEffect(() => {
     bgRef.current.style.backgroundImage = `url(${images[0]})`;
+
     musicEvent.current.addEventListener("loadeddata", (v) => {
       seekbarProgress.current.max = v.srcElement.duration * 1000;
       musicEvent.current.addEventListener("timeupdate", (timeEvent) => {
         if (timeEvent?.timeStamp) {
-          // console.log(timeEvent, seekbarProgress.current.max);
           seekbarProgress.current.value = musicEvent.current.currentTime * 1000;
         }
         var hr, min, sec;
@@ -181,8 +167,7 @@ const HomePage = () => {
               min="0"
               ref={seekbarProgress}
               className="seekbar-counter"
-              onMouseUp={seekBarController}
-              onMouseDown={seekBarPlay}
+              onChange={seekBarPlay}
             ></input>
             <div className="time">
               <span ref={timeCounter}>{whatsTime}</span>
